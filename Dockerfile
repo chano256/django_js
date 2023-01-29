@@ -4,7 +4,7 @@ WORKDIR /home/django_js
 
 RUN addgroup --system developers \
 	&& adduser --system --no-create-home --ingroup developers backend \
-	&& chown -R backend:developers /home/django_js
+	&& chown -R backend:developers /home
 
 RUN apt-get update \
 	&& apt-get install -y nano
