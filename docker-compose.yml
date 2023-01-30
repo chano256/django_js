@@ -7,6 +7,6 @@ services:
     ports:
       - 8081:8000
     volumes:
-      - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
-      # - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
+      # - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
+      - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
     restart: always
