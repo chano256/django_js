@@ -1,11 +1,12 @@
-version: '3.9'
+version: "3.9"
 services:
   django:
     container_name: django_js
     image: django_js
     build: .
-    ports: 
+    ports:
       - 8081:8000
     volumes:
-      - /Users/allanochan/Documents/VSCode/django_js:/home/django_js # replace with your pwd
+      - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
+      # - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
     restart: always
