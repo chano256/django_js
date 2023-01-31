@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  django:
+  backend:
     container_name: django_js
     image: django_js
     build: .
@@ -10,3 +10,20 @@ services:
       # - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
       - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
     restart: always
+  db:
+    container_name: django_js_db
+    image: postgres:15.1
+    restart: always
+    environment:
+      POSTGRES_USER: 
+      POSTGRES_DB: 
+      POSTGRES_PASSWORD: 
+    # ports:
+    #   - 8082:5432
+    # volumes:
+    #   - postgres_db:/var/lib/postgresql/data
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8082:8080
