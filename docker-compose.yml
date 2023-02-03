@@ -1,29 +1,65 @@
 version: "3.9"
 services:
   backend:
-    container_name: django_js
+    container_name: django_js_backend
     image: django_js
     build: .
+    # working_dir: /var/www
+    # tty: true
     ports:
       - 8081:8000
     volumes:
       # - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
       - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
-    restart: always
+    restart: unless-stopped
+    depends_on:
+      - db
+  # frontend:
+  #   container_name: django_js_frontend
+  #   image: javascript
+  #   restart: unless-stopped
+  #   tty: true # keeps connection running before container is fully up
+  #   depends_on:
+  #     - backend
   db:
     container_name: django_js_db
-    image: postgres:15.1
-    restart: always
+    image: postgres:15.1 # mariadb:10.5.1
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: 
-      POSTGRES_DB: 
-      POSTGRES_PASSWORD: 
-    # ports:
-    #   - 8082:5432
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - 8432:5432
     # volumes:
     #   - postgres_db:/var/lib/postgresql/data
-  adminer:
-    image: adminer:4.8.1
-    restart: always
-    ports:
-      - 8082:8080
+    # network:
+    #   - app
+  # adminer:
+  #   image: adminer:4.8.1
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8082:8080
+    # network:
+    #   - app
+  # webserver:
+  #   image: nginx:alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - 8100:80
+  #     - 8443:443 # ssl port
+  #   volumes:
+  #     - ./:/var/www
+  #     - ./docker-files/nginx/conf.d/:/etc/nginx/conf.d/
+  #   network:
+  #       - app
+  
+
+# network:
+#   app:
+#     driver: bridge
+
+
+# volume:
+#   app-data:
+#    - data
