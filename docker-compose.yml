@@ -4,8 +4,7 @@ services:
     container_name: django_js_backend
     image: django_js
     build: .
-    # working_dir: /var/www
-    # tty: true
+    tty: true
     ports:
       - 8081:8000
     volumes:
@@ -14,6 +13,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    # networks:
+    #   - django_js
   # frontend:
   #   container_name: django_js_frontend
   #   image: javascript
@@ -32,9 +33,9 @@ services:
     ports:
       - 8432:5432
     # volumes:
-    #   - postgres_db:/var/lib/postgresql/data
-    # network:
-    #   - app
+    #   - postgres_db:/var/lib/postgresql/data/
+    # networks:
+    #   - django_js
   # adminer:
   #   image: adminer:4.8.1
   #   restart: unless-stopped
@@ -55,11 +56,10 @@ services:
   #       - app
   
 
-# network:
-#   app:
+# networks:
+#   django_js:
 #     driver: bridge
 
 
-# volume:
-#   app-data:
-#    - data
+# volumes:
+#   postgres_db:
