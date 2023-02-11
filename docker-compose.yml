@@ -2,64 +2,42 @@ version: "3.9"
 services:
     backend:
         container_name: django_js_backend
-        image: django_js
+        image: backend:django_js
         build: .
-        tty: true
+        # tty: true
         ports:
-            - 8081:8000
+            - 8001:8000
         volumes:
-            # - ~/Documents/projects/django_js:/home/django_js # replace with your pwd
-            - /Users/allanochan/Documents/VSCode/django_js:/home/django_js
+            - .:/home/django_js
         restart: unless-stopped
+        command: python manage.py runserver 0.0.0.0:8000
         depends_on:
             - db
-        # networks:
-        #   - django_js
-    # frontend:
-    #   container_name: django_js_frontend
-    #   image: javascript
-    #   restart: unless-stopped
-    #   tty: true # keeps connection running before container is fully up
-    #   depends_on:
-    #     - backend
     db:
-        container_name: django_js_db
-        image: postgres:15.1 # mariadb:10.5.1
-        restart: unless-stopped
-        environment:
-            POSTGRES_USER: "${POSTGRES_USER}"
-            POSTGRES_DB: "${POSTGRES_DB}"
-            POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-        ports:
-            - 8432:5432
+        # image: postgres:15.1
         # volumes:
-        #   - postgres_db:/var/lib/postgresql/data/
-        # networks:
-        #   - django_js
-    # adminer:
-    #   image: adminer:4.8.1
-    #   restart: unless-stopped
-    #   ports:
-    #     - 8082:5432 # 8080
-    #   environment:
-    #     PGADMIN_DEFAULT_EMAIL: hanieasemi76@gmail.com
-    #     PGADMIN_DEFAULT_PASSWORD: password
-    # network:
-    #   - app
-    # webserver:
-    #   image: nginx:alpine
-    #   restart: unless-stopped
-    #   ports:
-    #     - 8100:80
-    #     - 8443:443 # ssl port
-    #   volumes:
-    #     - ./:/var/www
-    #     - ./docker-files/nginx/conf.d/:/etc/nginx/conf.d/
-    #   network:
-    #       - app
-# networks:
-#   django_js:
-#     driver: bridge
-
-# volumes:
-#   postgres_db:
+        #   - ./data/postgres/db:/var/lib/postgresql/data
+        # environment:
+        #   - POSTGRES_DB=postgres
+        #   - POSTGRES_USER=postgres
+        #   - POSTGRES_PASSWORD=postgres
+        # container_name: postgres_db
+        image: mysql:8.0.32
+        container_name: django_js_db
+        environment:
+            MYSQL_DATABASE: "${DB_NAME}"
+            MYSQL_ALLOW_EMPTY_PASSWORD: "true" # not advised in prod only for testing
+            # POSTGRES_USER: "${POSTGRES_USER}"
+            # POSTGRES_DB: "${POSTGRES_DB}"
+            # POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        volumes:
+            - ./data/mysql/db:/var/lib/mysql
+        restart: unless-stopped
+        # adminer:
+        #   image: adminer:4.8.1
+        #   restart: unless-stopped
+        #   ports:
+        #     - 8082:5432 # 8080
+        #   environment:
+        #     PGADMIN_DEFAULT_EMAIL: hanieasemi76@gmail.com
+        #     PGADMIN_DEFAULT_PASSWORD: password

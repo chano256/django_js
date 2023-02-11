@@ -1,5 +1,7 @@
 FROM python:3.11.1
 
+# ENV PYTHONUNBUFFERED=1 # logs immediately incase of crash
+
 WORKDIR /home/django_js
 
 RUN addgroup --system developers \
@@ -16,5 +18,3 @@ RUN pip install -r requirements.txt
 USER backend
 
 COPY . .
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
