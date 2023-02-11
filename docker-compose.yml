@@ -2,7 +2,7 @@ version: "3.9"
 services:
     backend:
         container_name: django_js_backend
-        image: backend:django_js
+        image: django_js:1.0.1
         build: .
         # tty: true
         ports:
