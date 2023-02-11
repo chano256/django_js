@@ -1,4 +1,5 @@
 # Custom Ignores #
+data/
 .vscode/
 docker-compose.yml
 *.pyc
