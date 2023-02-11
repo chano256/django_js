@@ -1,0 +1,8 @@
+1. Removing any volume bindings for application code,
+so that code stays inside the container and can’t be changed from outside
+2. Binding to different ports on the host
+3. Setting environment variables differently,
+such as reducing the verbosity of logging,
+or to specify settings for external services such as an email server
+4. Specifying a restart policy like 'restart always' to avoid downtime
+5. Adding extra services such as a log aggregator

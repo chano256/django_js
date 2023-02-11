@@ -25,8 +25,11 @@ services:
         image: mysql:8.0.32
         container_name: django_js_db
         environment:
-            MYSQL_DATABASE: "${DB_NAME}"
+            # MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?error}"
             MYSQL_ALLOW_EMPTY_PASSWORD: "true" # not advised in prod only for testing
+            MYSQL_DATABASE: "${DB_NAME:?error}" # must set or error
+            # MYSQL_USER: "${DB_USER:?error}"
+            # MYSQL_PASSWORD: "${DB_NAME:?error}"
             # POSTGRES_USER: "${POSTGRES_USER}"
             # POSTGRES_DB: "${POSTGRES_DB}"
             # POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
