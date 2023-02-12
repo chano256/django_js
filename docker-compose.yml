@@ -14,29 +14,20 @@ services:
         depends_on:
             - db
     db:
-        image: postgres:15.1
+        image: postgres:15.1 # mysql:8.0.32
         container_name: djs_postgres_db
         volumes:
-            - ./data/postgres/db:/var/lib/postgresql/data
+            - ./data/postgres/db:/var/lib/postgresql/data # - ./data/mysql/db:/var/lib/mysql
         environment:
             POSTGRES_DB: ${DB_NAME:?error} # abort if not set or empty
             POSTGRES_USER: ${DB_USER:?error}
             POSTGRES_PASSWORD: ${DB_PASSWORD?error} # abort if not set, proceed if empty ''
+            # MYSQL_ALLOW_EMPTY_PASSWORD: "true" # not advised in prod only for testing
+            # MYSQL_DATABASE: "${DB_NAME:?error}" # must set or error
+            # MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?error}" # required if no empty password
+            # MYSQL_USER: "${DB_USER:?error}"
+            # MYSQL_PASSWORD: "${DB_NAME:?error}"
         restart: unless-stopped
-        # image: mysql:8.0.32
-        # container_name: djs_mysql_db
-        # environment:
-        #     MYSQL_ALLOW_EMPTY_PASSWORD: "true" # not advised in prod only for testing
-        #     MYSQL_DATABASE: "${DB_NAME:?error}" # must set or error
-        # MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD:?error}" # required if no empty password
-        # MYSQL_USER: "${DB_USER:?error}"
-        # MYSQL_PASSWORD: "${DB_NAME:?error}"
-        # POSTGRES_USER: "${POSTGRES_USER}"
-        # POSTGRES_DB: "${POSTGRES_DB}"
-        # POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-        # volumes:
-        #     - ./data/mysql/db:/var/lib/mysql
-        # restart: unless-stopped
         # adminer:
         #   image: adminer:4.8.1
         #   restart: unless-stopped
