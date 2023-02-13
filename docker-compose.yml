@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.8"
 services:
     backend:
         container_name: django_js_backend
@@ -33,7 +33,7 @@ services:
         container_name: djs_adminer
         restart: unless-stopped
         ports:
-            - 8082:8080 # 5432
+            - 8002:8080 # 5432
         environment:
             PGADMIN_DEFAULT_EMAIL: test@test.com
             PGADMIN_DEFAULT_PASSWORD: test_password
