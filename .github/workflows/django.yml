@@ -9,11 +9,20 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: python:3.11.1
+    services:
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        ports:
+          - 5432:5432
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.11.1]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
 #     - name: Build Image
