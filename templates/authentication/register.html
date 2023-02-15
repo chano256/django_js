@@ -7,7 +7,8 @@
                 <div class="card-title py-3">
                     <h4>Register</h4>
                 </div>
-                <form action="" method="post">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %} {% include 'partials/_messages.html' %}
                     <div class="form-group">
                         <input
                             type="text"
@@ -21,6 +22,7 @@
                         class="invalid_feedback invalid-feedback"
                         style="display: none"
                     ></div>
+                    <p class="text-sm text-success usernameSuccessOutput"></p>
                     <div class="form-group">
                         <input
                             type="email"
@@ -38,7 +40,9 @@
                             placeholder="Password"
                             class="form-control form-control-sm"
                         />
-                        <small class="float-right py-2">show</small>
+                        <small class="float-right py-2 showPasswordToggle"
+                            >SHOW</small
+                        >
                     </div>
                     <input
                         type="submit"

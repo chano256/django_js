@@ -49,3 +49,11 @@
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
 }
+
+.showPasswordToggle {
+    cursor: default;
+}
+
+.showPasswordToggle:hover {
+    transform: scale(1.2);
+}
