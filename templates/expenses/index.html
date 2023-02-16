@@ -1,11 +1,26 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container">
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breaadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'expenses' %}">Expenses</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        My Expenses
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-2">
+            <nav aria-label="breaadcrumb">
+                <a class="btn btn-primary" href="{% url 'add-expense' %}"
+                    >Add Expense</a
+                >
+            </nav>
+        </div>
+    </div>
     {% include 'partials/_messages.html' %}
-    <h1>Expense List</h1>
-
-    <ul class="list-group">
-        <li class="list-group-item">Beer</li>
-        <li class="list-group-item">Avocado</li>
-    </ul>
 </div>
 {% endblock %}

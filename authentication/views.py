@@ -43,6 +43,7 @@ class RegistrationView(View):
 
         # validate data
         if not User.objects.filter(username=username).exists(): # if not User.objects.filter(email=email).exists():
+            # create account
             if len(password) < 6:
                 messages.error(request, 'Password too short, less than 6')
                 return render(request, 'authentication/register.html', context)
@@ -77,8 +78,8 @@ class RegistrationView(View):
             messages.success(request, 'Account successfully created')
             return render(request, 'authentication/register.html')
 
-        # create account
-        return render(request, 'authentication/register.html')
+        messages.info(request, 'User exists, Kindly Login')
+        return render(request, 'authentication/login.html')
     
 
 class VerificationView(View):
