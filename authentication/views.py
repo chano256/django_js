@@ -6,11 +6,12 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.contrib import auth
-from django.utils.encoding import force_bytes, DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes,force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import token_generator
+from django.contrib import auth
 # from validate_email import validate_email
 
 # Create your views here.
@@ -82,4 +83,53 @@ class RegistrationView(View):
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
+        try:
+            id = force_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=id)
+
+            if not token_generator.check_token(user, token):
+                return redirect('login'+'?message='+'User already activated')
+            
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+            messages.success(request, 'Account Activated Successfully')
+        except Exception as e:
+            pass
+        return redirect('login')
+    
+
+class LoginView(View):
+    def get(self, request):
+        return render(request, 'authentication/login.html')
+    
+    def post(self, request):
+        username=request.POST['username']
+        password=request.POST['password']
+
+        if not username and password:
+            messages.error(request, 'Please fill all fields')
+            return render(request, 'authentication/login.html')
+        
+        user = auth.authenticate(username=username,password=password)
+        if not user:
+            messages.error(request, ' Invalid credentials')
+            return render(request, 'authentication/login.html')
+        
+        if not user.is_active:
+            messages.error(request, ' Account is not activated')
+            return render(request, 'authentication/login.html')
+        auth.login(request, user)
+        
+        if username and password:
+            messages.success(request, 'Welcome to django js ' + 
+                                user.username + ' you are logged in')
+            return redirect('expenses')
+    
+
+class LogoutView(View):
+    def post(self, request):
+        auth.logout(request)
+        messages.success(request, 'You have been logged out')
         return redirect('login')
