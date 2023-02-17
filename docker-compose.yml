@@ -37,3 +37,15 @@ services:
         environment:
             PGADMIN_DEFAULT_EMAIL: test@test.com
             PGADMIN_DEFAULT_PASSWORD: test_password
+    # webserver:
+    #     image: nginx:latest
+    #     container_name: webserver
+    #     restart: unless-stopped
+    #     tty: true
+    #     ports:
+    #     - "8003:80"
+    #     - "8143:443"
+    #     #    - 80:8080
+    #     volumes:
+    #     - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+        
