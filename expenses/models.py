@@ -16,5 +16,5 @@ class Expense(models.Model):
     class Meta:
         ordering= ['-date']
     
-    class Category(models.Model):
-        name = models.CharField(max_length=255)
+class Category(models.Model):
+    name = models.CharField(max_length=255)
