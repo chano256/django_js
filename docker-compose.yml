@@ -4,7 +4,7 @@ services:
         container_name: django_js_backend
         image: django_js:1.0.1
         build: .
-        # tty: true
+        tty: true
         ports:
             - 8001:8000
         volumes:
