@@ -14,7 +14,13 @@ class Expense(models.Model):
         return self.category
     
     class Meta:
-        ordering= ['-date']
+        ordering= ['-date'] # descending order
     
 class Category(models.Model):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+    def __str__(self) -> str:
+        return self.name

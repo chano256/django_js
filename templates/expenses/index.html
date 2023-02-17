@@ -20,7 +20,44 @@
                 >
             </nav>
         </div>
+
+        <div class="container">
+            {% include 'partials/_messages.html' %} {% if expenses.count %}
+            <table class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.amount }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td>{{ expense.date }}</td>
+                        <td>
+                            <a
+                                class="btn btn-primary"
+                                href="{% url 'edit-expense' expense.id %}"
+                                >Edit</a
+                            >
+                            <a
+                                class="btn btn-danger mx-2 py-2 px-2"
+                                href="{% url 'delete-expense' expense.id %}"
+                                >Delete</a
+                            >
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
     </div>
-    {% include 'partials/_messages.html' %}
 </div>
 {% endblock %}

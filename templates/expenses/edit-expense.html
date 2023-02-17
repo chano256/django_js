@@ -6,7 +6,7 @@
                 <a href="{% url 'expenses' %}">Expenses</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-                Add Expenses
+                Edit Expenses
             </li>
         </ol>
     </nav>
@@ -16,7 +16,10 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{% url 'add-expense' %}" method="post">
+                    <form
+                        action="{% url 'edit-expense' expense.id %}"
+                        method="post"
+                    >
                         {% include 'partials/_messages.html' %} {% csrf_token %}
                         <div class="form-group mt-2">
                             <label for="">Amount</label>
@@ -39,6 +42,13 @@
                         <div class="form-group mt-3">
                             <label for="">Category</label>
                             <select name="category">
+                                <option
+                                    selected
+                                    name="category"
+                                    value="{{ values.category }}"
+                                >
+                                    {{ values.category }}
+                                </option>
                                 {% for category in categories %}
                                 <option
                                     name="category"
@@ -49,17 +59,9 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <div class="form-group mt-3 mb-3">
-                            <label for="">Date</label>
-                            <input
-                                type="date"
-                                class="form-control form-control-sm"
-                                name="expense_date"
-                            />
-                        </div>
                         <input
                             type="submit"
-                            value="submit"
+                            value="Update"
                             class="w-100 btn btn-primary btn-primary-sm"
                         />
                     </form>
