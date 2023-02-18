@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
+from datetime import date as pydate
 
 # Create your views here.
 @login_required(login_url='/authentication/login')
@@ -48,7 +49,7 @@ def add_expense(request):
 
     if request.method == 'POST':
         amount = request.POST['amount']
-        date = request.POST['expense_date']
+        date = request.POST['expense_date'] if request.POST['expense_date'] else pydate.today().isoformat()
         category = request.POST['category']
         description = request.POST['description']
 
