@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}{% block content %}
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-10">
@@ -7,55 +7,94 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'expenses' %}">Expenses</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        My Expenses
-                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">My Expenses</li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-2">
             <nav aria-label="breaadcrumb">
-                <a class="btn btn-primary" href="{% url 'add-expense' %}"
-                    >Add Expense</a
-                >
+                <a class="btn btn-primary" href="{% url 'add-expense' %}">Add Expense</a>
             </nav>
         </div>
 
         <div class="container">
             {% include 'partials/_messages.html' %} {% if expenses.count %}
-            <table class="table table-stripped table-hover">
-                <thead>
-                    <tr>
-                        <th>Amount</th>
-                        <th>Category</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for expense in expenses %}
-                    <tr>
-                        <td>{{ expense.amount }}</td>
-                        <td>{{ expense.category }}</td>
-                        <td>{{ expense.description }}</td>
-                        <td>{{ expense.date }}</td>
-                        <td>
-                            <a
-                                class="btn btn-primary"
-                                href="{% url 'edit-expense' expense.id %}"
-                                >Edit</a
-                            >
-                            <a
-                                class="btn btn-danger mx-2 py-2 px-2"
-                                href="{% url 'delete-expense' expense.id %}"
-                                >Delete</a
-                            >
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="searchField" placeholder="search" />
+                    </div>
+                </div>
+            </div>
+            <div class="app-output">
+                <table class="table table-stripped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in page_obj %}
+                        <tr>
+                            <td>{{ expense.amount }}</td>
+                            <td>{{ expense.category }}</td>
+                            <td>{{ expense.description }}</td>
+                            <td>{{ expense.date }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'edit-expense' expense.id %}">Edit</a>
+                                <a class="btn btn-danger mx-2 py-2 px-2" href="{% url 'delete-expense' expense.id %}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-output">
+                <table class="table table-stripped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="pagination-container">
+                <div class="">Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</div>
+                <ul class="pagination float-right align-right mr-auto">
+                    {% if page_obj.has_previous %}
+                    <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}>
+                        <a class="page-link" href="?page=1">&laquo; 1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+    
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
             {% endif %}
         </div>
     </div>

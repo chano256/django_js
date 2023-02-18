@@ -19,3 +19,5 @@ RUN pip install -r requirements.txt
 USER backend
 
 COPY . .
+
+# ENTRYPOINT [ "entrypoint.sh" ]
