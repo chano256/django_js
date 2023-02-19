@@ -43,11 +43,29 @@ services:
     #     restart: unless-stopped
     #     tty: true
     #     ports:
-    #         - "8003:80"
-    #         - "8143:443"
+    #         - 8003:80
+    #         - 8143:443
     #         #    - 80:80
     #     volumes:
     #         - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     #     depends_on:
     #         - backend
+    # jenkins:
+    #     image: jenkins:2.60.0
+    #     container_name: jenkins
+    #     restart: unless-stopped
+    #     ports:
+    #         - 8004:8080
+    #         - 8005:50000
+    #     volumes:
+    #         - ./data/jenkins-data:/var/jenkins_home
+    #         - ./jenkins-docker-certs:/certs/client:ro
+    #     env:
+    #         DOCKER_CERT_PATH=/certs/client
+    #         DOCKER_HOST=tcp://docker:2376
+    #         DOCKER_TLS_VERIFY=1
+    #     depends_on:
+    #         - backend
+    #     # networks:
+    #     #     - django_js            
         
